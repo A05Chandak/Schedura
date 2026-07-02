@@ -15,6 +15,20 @@ const port = Number(process.env.PORT || 4000);
 app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
 app.use(express.json());
 
+app.get("/", (_req, res) => {
+  res.json({ 
+    message: "Calendly-clone API Server",
+    status: "running",
+    endpoints: {
+      health: "/api/health",
+      eventTypes: "/api/event-types",
+      availability: "/api/availability",
+      meetings: "/api/meetings",
+      public: "/api/public"
+    }
+  });
+});
+
 app.get("/api/health", async (_req, res, next) => {
   try {
     await pingDatabase();
